@@ -65,7 +65,15 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countUnigrams(corpus):
-    return
+    templist = []
+    tempdict = {}
+    for i in corpus:
+        for j in i:
+            templist.append(j)
+    for item in templist:
+        tempdict[item] = templist.count(item)
+    # print(tempdict)  
+    return tempdict
 
 
 '''
@@ -309,7 +317,8 @@ if __name__ == "__main__":
     # test.runWeek1()
     # test.testLoadBook()
     # test.testGetCorpusLength()
-    test.testBuildVocabulary()
+    # test.testBuildVocabulary()
+    test.testCountUnigrams()
 
     ## Uncomment these for Week 2 ##
 """
