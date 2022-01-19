@@ -114,14 +114,6 @@ Returns: dict mapping strs to (dicts mapping strs to ints)
 '''
 def countBigrams(corpus):
     tempdict={}
-    # for i in corpus:
-    #     for i in range(len(i)-1):
-    #         first = corpus[]
-    #         if i[j] not in tempdict:
-    #             tempdict[i[j]] = {i[j+1]:1}
-    #         # else:
-    #         #     tempdict[i[j]][i[j+1]] += 1     
-    # print(tempdict)
     for i in range(len(corpus)):
         for j in range(len(corpus[i])-1):
             first = corpus[i][j]
@@ -143,7 +135,12 @@ Parameters: list of strs
 Returns: list of floats
 '''
 def buildUniformProbs(unigrams):
-    return
+    templist=[]
+    total_words = len(unigrams)
+    for i in range(len(unigrams)):
+        templist.append(1/total_words)
+    # print(templist)
+    return templist
 
 
 '''
@@ -349,9 +346,10 @@ if __name__ == "__main__":
     # test.testCountUnigrams()
     # test.testGetStartWords()
     # test.testCountStartWords()
-    test.testCountBigrams()
+    # test.testCountBigrams()
 
     ## Uncomment these for Week 2 ##
+    test.testBuildUniformProbs()
 """
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
