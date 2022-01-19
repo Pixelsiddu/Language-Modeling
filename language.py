@@ -20,10 +20,12 @@ def loadBook(filename):
     finallist = []
     file= open(filename, "r").read()
     i = file.split("\n")
+    # print(i)
     for j in i:
         k = j.split(" ")
-        if len(k) != 1:
+        if k != ['']:
             finallist.append(k)
+    # print(finallist)
     return finallist
 
 
@@ -164,7 +166,17 @@ Parameters: dict mapping strs to ints ; dict mapping strs to (dicts mapping strs
 Returns: dict mapping strs to (dicts mapping strs to (lists of values))
 '''
 def buildBigramProbs(unigramCounts, bigramCounts):
-    return
+    dict = {}
+    for i in bigramCounts:
+        words =[]
+        prob = []
+        for j in bigramCounts[i]:
+            words.append(j)
+            prob.append(bigramCounts[i][j]/unigramCounts[i])
+        dict[i] = {"words": words, "probs": prob}
+    return dict
+
+    
 
 
 '''
@@ -354,7 +366,8 @@ if __name__ == "__main__":
 
     ## Uncomment these for Week 2 ##
     # test.testBuildUniformProbs()
-    test.testBuildUnigramProbs()
+    # test.testBuildUnigramProbs()
+    test.testBuildBigramProbs()
 """
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
