@@ -125,6 +125,7 @@ def countBigrams(corpus):
             if second not in tempdict[first]:
                 tempdict[first][second] = 0
             tempdict[first][second] += 1
+    # print(tempdict)
     return tempdict
 
 
@@ -207,7 +208,13 @@ Returns: str
 '''
 from random import choices
 def generateTextFromUnigrams(count, words, probs):
-    return
+    sent = ""
+    i = 0
+    while i < count:
+        ranwords = choices(words, probs)
+        sent = sent + " " + ranwords[0]
+        i += 1 
+    return sent
 
 
 '''
@@ -378,7 +385,8 @@ if __name__ == "__main__":
     # test.testBuildUniformProbs()
     # test.testBuildUnigramProbs()
     # test.testBuildBigramProbs()
-    test.testGetTopWords()
+    # test.testGetTopWords()
+    test.testGenerateTextFromUnigrams()
 """
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
