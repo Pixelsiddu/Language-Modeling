@@ -69,12 +69,15 @@ Returns: dict mapping strs to ints
 def countUnigrams(corpus):
     templist = []
     tempdict = {}
+    print(len(corpus))
     for i in corpus:
         for j in i:
-            templist.append(j)
-    for item in templist:
-        tempdict[item] = templist.count(item)
-    # print(tempdict)  
+            if j in tempdict:
+                tempdict[j] +=1
+            else:
+                tempdict[j] = 1
+    
+
     return tempdict
 
 
@@ -206,7 +209,7 @@ generateTextFromUnigrams(count, words, probs)
 Parameters: int ; list of strs ; list of floats
 Returns: str
 '''
-from random import choices
+from random import choice, choices
 def generateTextFromUnigrams(count, words, probs):
     sent = ""
     i = 0
@@ -224,7 +227,20 @@ Parameters: int ; list of strs ; list of floats ; dict mapping strs to (dicts ma
 Returns: str
 '''
 def generateTextFromBigrams(count, startWords, startWordProbs, bigramProbs):
-    return
+    text = []
+    stri = ""
+    while len(text) < count:
+        if len(text) == 0 or text[-1] ==".":
+            ranword = choices(startWords, startWordProbs)
+            text += ranword
+        else:    
+            i = text[-1]
+            words = bigramProbs[i]["words"]
+            probs = bigramProbs[i]["probs"]
+            text += choices(words,probs)
+    for i in text:
+        stri = stri + " " + i
+    return stri
 
 
 ### WEEK 3 ###
@@ -386,13 +402,14 @@ if __name__ == "__main__":
     # test.testBuildUnigramProbs()
     # test.testBuildBigramProbs()
     # test.testGetTopWords()
-    test.testGenerateTextFromUnigrams()
-"""
+    # test.testGenerateTextFromUnigrams()
+    # test.testGenerateTextFromBigrams()
+
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     test.runWeek2()
-"""
+
 
     ## Uncomment these for Week 3 ##
 """

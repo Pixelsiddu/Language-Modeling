@@ -207,11 +207,11 @@ def testBuildUnigramProbs():
 def testBuildBigramProbs():
     print("Testing buildBigramProbs()...", end="")
     # since 'world' appears twice, once at the end of a sentence
-    # assert(buildBigramProbs(\
-    #     { "hello" : 2, "world" : 2, "again" : 1 },
-    #     { "hello" : { "world" : 2 }, "world" : { "again" : 1 } }) == \
-    #     { "hello" : { "words" : ["world"], "probs" : [1] }, 
-    #       "world" : { "words" : ["again"], "probs" : [0.5] } })
+    assert(buildBigramProbs(\
+        { "hello" : 2, "world" : 2, "again" : 1 },
+        { "hello" : { "world" : 2 }, "world" : { "again" : 1 } }) == \
+        { "hello" : { "words" : ["world"], "probs" : [1] }, 
+          "world" : { "words" : ["again"], "probs" : [0.5] } })
     assert(buildBigramProbs(\
         { "hello" : 1, "and" : 1, "welcome" : 1, "to" : 2, "15-110" : 1, "." : 2, "we're" : 1, "happy" : 1, "have" : 1, "you" : 1 }, 
         { "hello" : { "and" : 1 }, "and" : { "welcome" : 1 }, "welcome" : { "to" : 1 }, 
@@ -426,6 +426,7 @@ def week2Tests():
 
 def runWeek2():
     # Check-in 1 Functions
+    # print("***************************************************************")
     book = loadBook("data/fairytales_clean.txt")
     length = getCorpusLength(book)
     uniqueWords = buildVocabulary(book)
@@ -433,6 +434,7 @@ def runWeek2():
     unigramCounts = countUnigrams(book)
     startWordCounts = countStartWords(book)
     bigramCounts = countBigrams(book)
+
 
     # Uniform Model
     uniformProbs = buildUniformProbs(uniqueWords)
