@@ -69,15 +69,13 @@ Returns: dict mapping strs to ints
 def countUnigrams(corpus):
     templist = []
     tempdict = {}
-    print(len(corpus))
+    # print(len(corpus))
     for i in corpus:
         for j in i:
             if j in tempdict:
                 tempdict[j] +=1
             else:
                 tempdict[j] = 1
-    
-
     return tempdict
 
 
@@ -257,6 +255,21 @@ Parameters: 2D list of strs
 Returns: None
 '''
 def graphTop50Words(corpus):
+    import matplotlib.pyplot as plt
+    words = buildVocabulary(corpus)
+    count = countUnigrams(corpus)
+    length = getCorpusLength(corpus)
+    unigramProb = buildUnigramProbs(words, count, length)
+    dic = getTopWords(50, words, unigramProb, ignore)
+    names = []
+    values = []
+    for k in dic:
+        names.append(k)
+        values.append(dic[k])
+    plt.bar(names, values)
+    plt.xticks(rotation='vertical')
+    plt.title("top 50 words")
+    plt.show()
     return
 
 
@@ -267,6 +280,8 @@ Parameters: 2D list of strs
 Returns: None
 '''
 def graphTopStartWords(corpus):
+
+    getTopWords(20, startWords, startWordProbs, ignore)
     return
 
 
@@ -405,14 +420,13 @@ if __name__ == "__main__":
     # test.testGenerateTextFromUnigrams()
     # test.testGenerateTextFromBigrams()
 
-    print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-    test.week2Tests()
-    print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek2()
+    # print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
+    # test.week2Tests()
+    # print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek2()
 
 
     ## Uncomment these for Week 3 ##
-"""
+
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     test.runWeek3()
-"""
