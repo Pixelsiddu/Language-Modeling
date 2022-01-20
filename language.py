@@ -285,7 +285,7 @@ def graphTopStartWords(corpus):
     startWordsCount = countStartWords(corpus)
     length = getCorpusLength(corpus)
     startWordProbs = buildUnigramProbs(startwords, startWordsCount, length)
-    dic = getTopWords(50, startwords, startWordProbs, ignore)
+    dic =getTopWords(50, startwords, startWordProbs, ignore)
     names = []
     values = []
     for k in dic:
@@ -305,6 +305,25 @@ Parameters: 2D list of strs ; str
 Returns: None
 '''
 def graphTopNextWords(corpus, word):
+    import matplotlib.pyplot as plt
+
+    unigramCounts = countUnigrams(corpus)
+    bigramCounts = countBigrams(corpus)
+    swordProb=buildBigramProbs(unigramCounts, bigramCounts)
+    words = swordProb[word]["words"]
+    probss = swordProb[word]["probs"]
+
+    dic = getTopWords(10, words, probss, ignore)
+    print(dic)
+    names = []
+    values = []
+    for k in dic:
+        names.append(k)
+        values.append(dic[k])
+    plt.bar(names, values)
+    plt.xticks(rotation='vertical')
+    plt.title("top 10 next words")
+    plt.show()
     return
 
 
