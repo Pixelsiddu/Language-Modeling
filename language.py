@@ -17,7 +17,14 @@ Parameters: str
 Returns: 2D list of strs
 '''
 def loadBook(filename):
-    return
+    finallist = []
+    file= open(filename, "r").read()
+    i = file.split("\n")
+    for j in i:
+        k = j.split(" ")
+        if len(k) != 1:
+            finallist.append(k)
+    return finallist
 
 
 '''
@@ -27,7 +34,13 @@ Parameters: 2D list of strs
 Returns: int
 '''
 def getCorpusLength(corpus):
-    return
+    templist = []
+    count = 0
+    for i in corpus:
+        for j in i:
+            if i not in templist:
+                count = count+1
+    return count
 
 
 '''
@@ -37,7 +50,12 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def buildVocabulary(corpus):
-    return
+    templist = []
+    for i in corpus:
+        for j in i:
+            if j not in templist:
+                templist.append(j)
+    return templist
 
 
 '''
@@ -47,7 +65,15 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countUnigrams(corpus):
-    return
+    templist = []
+    tempdict = {}
+    for i in corpus:
+        for j in i:
+            templist.append(j)
+    for item in templist:
+        tempdict[item] = templist.count(item)
+    # print(tempdict)  
+    return tempdict
 
 
 '''
@@ -57,7 +83,11 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def getStartWords(corpus):
-    return
+    templist = []
+    for i in corpus:
+        if i[0] not in templist:
+            templist.append(i[0])
+    return templist
 
 
 '''
@@ -67,7 +97,13 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countStartWords(corpus):
-    return
+    templist = []
+    tempdict = {}
+    for i in corpus:
+        templist.append(i[0])
+    for item in templist:
+        tempdict[item] = templist.count(item)    
+    return tempdict
 
 
 '''
@@ -77,7 +113,25 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to (dicts mapping strs to ints)
 '''
 def countBigrams(corpus):
-    return
+    tempdict={}
+    # for i in corpus:
+    #     for i in range(len(i)-1):
+    #         first = corpus[]
+    #         if i[j] not in tempdict:
+    #             tempdict[i[j]] = {i[j+1]:1}
+    #         # else:
+    #         #     tempdict[i[j]][i[j+1]] += 1     
+    # print(tempdict)
+    for i in range(len(corpus)):
+        for j in range(len(corpus[i])-1):
+            first = corpus[i][j]
+            second = corpus[i][j+1]
+            if first not in tempdict:
+                tempdict[first] = {}
+            if second not in tempdict[first]:
+                tempdict[first][second] = 0
+            tempdict[first][second] += 1
+    return tempdict
 
 
 ### WEEK 2 ###
@@ -285,10 +339,17 @@ def scatterPlot(xs, ys, labels, title):
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek1()
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # test.runWeek1()
+    # test.testLoadBook()
+    # test.testGetCorpusLength()
+    # test.testBuildVocabulary()
+    # test.testCountUnigrams()
+    # test.testGetStartWords()
+    # test.testCountStartWords()
+    test.testCountBigrams()
 
     ## Uncomment these for Week 2 ##
 """
