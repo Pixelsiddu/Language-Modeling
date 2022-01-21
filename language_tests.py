@@ -426,6 +426,7 @@ def week2Tests():
 
 def runWeek2():
     # Check-in 1 Functions
+    # print("***************************************************************")
     book = loadBook("data/fairytales_clean.txt")
     length = getCorpusLength(book)
     uniqueWords = buildVocabulary(book)
@@ -433,6 +434,7 @@ def runWeek2():
     unigramCounts = countUnigrams(book)
     startWordCounts = countStartWords(book)
     bigramCounts = countBigrams(book)
+
 
     # Uniform Model
     uniformProbs = buildUniformProbs(uniqueWords)
