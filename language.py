@@ -258,18 +258,9 @@ def graphTop50Words(corpus):
     import matplotlib.pyplot as plt
     words = buildVocabulary(corpus)
     count = countUnigrams(corpus)
-    length = getCorpusLength(corpus)
-    unigramProb = buildUnigramProbs(words, count, length)
+    unigramProb = buildUnigramProbs(words, count, len(corpus))
     dic = getTopWords(50, words, unigramProb, ignore)
-    names = []
-    values = []
-    for k in dic:
-        names.append(k)
-        values.append(dic[k])
-    plt.bar(names, values)
-    plt.xticks(rotation='vertical')
-    plt.title("top 50 words")
-    plt.show()
+    barPlot(dic, "Top 50 words")
     return
 
 
