@@ -324,17 +324,17 @@ def setupChartData(corpus1, corpus2, topWordCount):
     problist2 = []
     dic = {}
 
-    length1 = getCorpusLength(corpus1)
+    
     words1 = buildVocabulary(corpus1) #[1000-2000]
     unigramCounts1 = countUnigrams(corpus1)
-    probs1 = buildUnigramProbs(words1, unigramCounts1, length1)
+    probs1 = buildUnigramProbs(words1, unigramCounts1, len(corpus1))
     dic1 = getTopWords(topWordCount, words1, probs1, ignore)
     wordlist += list(dic1.keys())
 
     length2 = getCorpusLength(corpus2)
     words2 = buildVocabulary(corpus2)
     unigramCounts2 = countUnigrams(corpus2)
-    probs2 = buildUnigramProbs(words2, unigramCounts2, length2) 
+    probs2 = buildUnigramProbs(words2, unigramCounts2, len(corpus2)) 
     dic2 = getTopWords(topWordCount, words2, probs2, ignore)
     l = list(dic2.keys())
 
