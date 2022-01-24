@@ -67,6 +67,7 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countUnigrams(corpus):
+    templist = []
     tempdict = {}
     # print(len(corpus))
     for i in corpus:
@@ -154,12 +155,8 @@ Returns: list of floats
 '''
 def buildUnigramProbs(unigrams, unigramCounts, totalCount):
     templist = []
-
-    for key in unigramCounts: 
-        if key in unigrams:
-            templist.append(unigramCounts[key]/totalCount)
-        else:
-            templist.append(0)
+    for key in unigramCounts:
+        templist.append(unigramCounts[key]/totalCount)
     # print(templist)
     return templist
 
@@ -201,10 +198,7 @@ def getTopWords(count, words, probs, ignoreList):
                     tempdict[words[j]] = probs[j]
     
     out = dict(list(tempdict.items())[0: count])
-    # print(out)
     return out
-
-# getTopWords(2, [ "hello", "world", "again"], [2/5, 2/5, 1/5], ["world"])
 
 
 '''
@@ -264,10 +258,18 @@ def graphTop50Words(corpus):
     import matplotlib.pyplot as plt
     words = buildVocabulary(corpus)
     count = countUnigrams(corpus)
-    # length = getCorpusLength(corpus)
-    unigramProb = buildUnigramProbs(words, count, len(corpus))
+    length = getCorpusLength(corpus)
+    unigramProb = buildUnigramProbs(words, count, length)
     dic = getTopWords(50, words, unigramProb, ignore)
-    barPlot(dic, "top 50 words")
+    names = []
+    values = []
+    for k in dic:
+        names.append(k)
+        values.append(dic[k])
+    plt.bar(names, values)
+    plt.xticks(rotation='vertical')
+    plt.title("top 50 words")
+    plt.show()
     return
 
 
@@ -281,12 +283,9 @@ def graphTopStartWords(corpus):
     import matplotlib.pyplot as plt
     startwords = getStartWords(corpus)
     startWordsCount = countStartWords(corpus)
-    # length = getCorpusLength(corpus)
     startWordProbs = buildUnigramProbs(startwords, startWordsCount, len(corpus))
-    dic =getTopWords(50, startwords, startWordProbs, ignore)
-    # print(dic)
-    barPlot(dic, "top start words")
-
+    dic = getTopWords(50, startwords, startWordProbs, ignore)
+    barPlot(dic, "Top start words")
     return
 
 
@@ -297,17 +296,6 @@ Parameters: 2D list of strs ; str
 Returns: None
 '''
 def graphTopNextWords(corpus, word):
-    import matplotlib.pyplot as plt
-
-    unigramCounts = countUnigrams(corpus)
-    bigramCounts = countBigrams(corpus)
-    swordProb=buildBigramProbs(unigramCounts, bigramCounts)
-    words = swordProb[word]["words"]
-    probss = swordProb[word]["probs"]
-
-    dic = getTopWords(10, words, probss, ignore)
-    barPlot(dic, "top next words")
-
     return
 
 
@@ -318,48 +306,7 @@ Parameters: 2D list of strs ; 2D list of strs ; int
 Returns: dict mapping strs to (lists of values)
 '''
 def setupChartData(corpus1, corpus2, topWordCount):
-
-    wordlist = []
-    problist1 = []
-    problist2 = []
-    dic = {}
-
-    
-    words1 = buildVocabulary(corpus1) #[1000-2000]
-    unigramCounts1 = countUnigrams(corpus1)
-    probs1 = buildUnigramProbs(words1, unigramCounts1, len(corpus1))
-    dic1 = getTopWords(topWordCount, words1, probs1, ignore)
-    wordlist += list(dic1.keys())
-
-    length2 = getCorpusLength(corpus2)
-    words2 = buildVocabulary(corpus2)
-    unigramCounts2 = countUnigrams(corpus2)
-    probs2 = buildUnigramProbs(words2, unigramCounts2, len(corpus2)) 
-    dic2 = getTopWords(topWordCount, words2, probs2, ignore)
-    l = list(dic2.keys())
-
-    for i in l:
-        if i not in wordlist:
-            wordlist.append(i)
-    
-    for j in wordlist:
-        if j in words1:
-            ind = words1.index(j)
-            problist1.append(probs1[ind])
-        else: 
-            problist1.append(0)
-    
-        if j in words2:
-            ind = words2.index(j)
-            problist2.append(probs2[ind])
-        else:
-            problist2.append(0)
-
-    dic["topWords"] = wordlist
-    dic["corpus1Probs"] = problist1
-    dic["corpus2Probs"] = problist2
-
-    return dic
+    return
 
 
 '''
@@ -369,13 +316,6 @@ Parameters: 2D list of strs ; str ; 2D list of strs ; str ; int ; str
 Returns: None
 '''
 def graphTopWordsSideBySide(corpus1, name1, corpus2, name2, numWords, title):
-    x = setupChartData(corpus1, corpus2, numWords)
-
-    xValues = x["topWords"]
-    values1 = x["corpus1Probs"]
-    values2 = x["corpus2Probs"]
-
-    sideBySideBarPlots(xValues, values1, values2, name1, name2, title)
     return
 
 
@@ -386,15 +326,6 @@ Parameters: 2D list of strs ; 2D list of strs ; int ; str
 Returns: None
 '''
 def graphTopWordsInScatterplot(corpus1, corpus2, numWords, title):
-
-    x = setupChartData(corpus1, corpus2, numWords)
-
-    labels = x["topWords"]
-    xs = x["corpus1Probs"]
-    ys = x["corpus2Probs"]
-
-    scatterPlot(xs, ys, labels, title)
-    
     return
 
 
@@ -503,4 +434,3 @@ if __name__ == "__main__":
 
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     test.runWeek3()
-    # test.testSetupChartData()
