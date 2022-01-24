@@ -314,16 +314,7 @@ def graphTopNextWords(corpus, word):
     probss = swordProb[word]["probs"]
 
     dic = getTopWords(10, words, probss, ignore)
-    print(dic)
-    names = []
-    values = []
-    for k in dic:
-        names.append(k)
-        values.append(dic[k])
-    plt.bar(names, values)
-    plt.xticks(rotation='vertical')
-    plt.title("top 10 next words")
-    plt.show()
+    barPlot(dic, "Top next words")
     return
 
 
