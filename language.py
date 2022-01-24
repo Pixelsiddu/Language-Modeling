@@ -283,18 +283,9 @@ def graphTopStartWords(corpus):
     import matplotlib.pyplot as plt
     startwords = getStartWords(corpus)
     startWordsCount = countStartWords(corpus)
-    length = getCorpusLength(corpus)
-    startWordProbs = buildUnigramProbs(startwords, startWordsCount, length)
+    startWordProbs = buildUnigramProbs(startwords, startWordsCount, len(corpus))
     dic = getTopWords(50, startwords, startWordProbs, ignore)
-    names = []
-    values = []
-    for k in dic:
-        names.append(k)
-        values.append(dic[k])
-    plt.bar(names, values)
-    plt.xticks(rotation='vertical')
-    plt.title("top 50 start words")
-    plt.show()
+    barPlot(dic, "Top start words")
     return
 
 
