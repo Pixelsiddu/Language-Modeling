@@ -154,8 +154,12 @@ Returns: list of floats
 '''
 def buildUnigramProbs(unigrams, unigramCounts, totalCount):
     templist = []
-    for key in unigramCounts:
-        templist.append(unigramCounts[key]/totalCount)
+
+    for key in unigramCounts: 
+        if key in unigrams:
+            templist.append(unigramCounts[key]/totalCount)
+        else:
+            templist.append(0)
     # print(templist)
     return templist
 
@@ -197,7 +201,10 @@ def getTopWords(count, words, probs, ignoreList):
                     tempdict[words[j]] = probs[j]
     
     out = dict(list(tempdict.items())[0: count])
+    # print(out)
     return out
+
+# getTopWords(2, [ "hello", "world", "again"], [2/5, 2/5, 1/5], ["world"])
 
 
 '''
@@ -257,18 +264,10 @@ def graphTop50Words(corpus):
     import matplotlib.pyplot as plt
     words = buildVocabulary(corpus)
     count = countUnigrams(corpus)
-    length = getCorpusLength(corpus)
-    unigramProb = buildUnigramProbs(words, count, length)
+    # length = getCorpusLength(corpus)
+    unigramProb = buildUnigramProbs(words, count, len(corpus))
     dic = getTopWords(50, words, unigramProb, ignore)
-    names = []
-    values = []
-    for k in dic:
-        names.append(k)
-        values.append(dic[k])
-    plt.bar(names, values)
-    plt.xticks(rotation='vertical')
-    plt.title("top 50 words")
-    plt.show()
+    barPlot(dic, "top 50 words")
     return
 
 
@@ -282,18 +281,12 @@ def graphTopStartWords(corpus):
     import matplotlib.pyplot as plt
     startwords = getStartWords(corpus)
     startWordsCount = countStartWords(corpus)
-    length = getCorpusLength(corpus)
-    startWordProbs = buildUnigramProbs(startwords, startWordsCount, length)
+    # length = getCorpusLength(corpus)
+    startWordProbs = buildUnigramProbs(startwords, startWordsCount, len(corpus))
     dic =getTopWords(50, startwords, startWordProbs, ignore)
-    names = []
-    values = []
-    for k in dic:
-        names.append(k)
-        values.append(dic[k])
-    plt.bar(names, values)
-    plt.xticks(rotation='vertical')
-    plt.title("top 50 start words")
-    plt.show()
+    # print(dic)
+    barPlot(dic, "top start words")
+
     return
 
 
@@ -313,16 +306,8 @@ def graphTopNextWords(corpus, word):
     probss = swordProb[word]["probs"]
 
     dic = getTopWords(10, words, probss, ignore)
-    # print(dic)
-    names = []
-    values = []
-    for k in dic:
-        names.append(k)
-        values.append(dic[k])
-    plt.bar(names, values)
-    plt.xticks(rotation='vertical')
-    plt.title("top 10 bigrams of a word")
-    plt.show()
+    barPlot(dic, "top next words")
+
     return
 
 
